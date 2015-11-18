@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+							http://www.springframework.org/schema/beans/spring-beans.xsd 
+							http://www.springframework.org/schema/context 
+							http://www.springframework.org/schema/context/spring-context.xsd">
+							
+
+	<!-- 
+		<bean id="jedisPool2" class="redis.clients.jedis.JedisPool" destroy-method="destroy">
+		<constructor-arg index="0" ref="jedisPoolConfig"/>
+		<constructor-arg index="1" value="10.18.99.147"/>
+		<constructor-arg index="2" value="7001" type="int"/>
+		<constructor-arg index="3" value="5000" type="int"/>
+	</bean>
+		<bean id="jedisPool3" class="redis.clients.jedis.JedisPool" destroy-method="destroy">
+		<constructor-arg index="0" ref="jedisPoolConfig"/>
+		<constructor-arg index="1" value="10.18.99.147"/>
+		<constructor-arg index="2" value="7002" type="int"/>
+		<constructor-arg index="3" value="5000" type="int"/>
+	</bean>
+		<bean id="jedisPool4" class="redis.clients.jedis.JedisPool" destroy-method="destroy">
+		<constructor-arg index="0" ref="jedisPoolConfig"/>
+		<constructor-arg index="1" value="10.18.99.147"/>
+		<constructor-arg index="2" value="7003" type="int"/>
+		<constructor-arg index="3" value="5000" type="int"/>
+	</bean>
+	
+		<bean id="jedisPool80" class="redis.clients.jedis.JedisPool" destroy-method="destroy">
+		<constructor-arg index="0" ref="jedisPoolConfig"/>
+		<constructor-arg index="1" value="192.168.6.93"/>
+		<constructor-arg index="2" value="6380" type="int"/>
+		<constructor-arg index="3" value="5000" type="int"/>
+	</bean>
+	
+	
+	
+	<bean id="jedisPool" class="redis.clients.jedis.JedisPool" destroy-method="destroy">
+		<constructor-arg index="0" ref="jedisPoolConfig"/>
+		<constructor-arg index="1" value="192.168.6.161"/>
+		<constructor-arg index="2" value="6379" type="int"/>
+		<constructor-arg index="3" value="5000" type="int"/>
+	</bean>
+
+
+
+
+<bean id="shardedJedisPool" class="redis.clients.jedis.ShardedJedisPool">
+		<constructor-arg index="0" ref="jedisPoolConfig" />
+		<constructor-arg index="1">
+			<list>
+				<bean class="redis.clients.jedis.JedisShardInfo">
+					<constructor-arg index="0" value="192.168.6.93" />
+					<constructor-arg index="1" value="6379" type="int" />
+				</bean>
+ 				<bean class="redis.clients.jedis.JedisShardInfo">
+					<constructor-arg index="0" value="${redis2.ip}" />
+					<constructor-arg index="1" value="${redis.port}"
+						type="int" />
+				</bean>
+			</list>
+		</constructor-arg>
+	</bean> -->
+
+</beans>

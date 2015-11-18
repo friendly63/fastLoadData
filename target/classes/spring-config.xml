@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+							http://www.springframework.org/schema/beans/spring-beans.xsd 
+							http://www.springframework.org/schema/context 
+							http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:annotation-config />
+	<!--<context:component-scan base-package="com.qiaoda.fdfs" /> -->
+
+
+	<!-- 加载Spring配置文件 -->
+	<context:property-placeholder
+		location="classpath:**/spring.properties,**/fdfs-client.properties,**/log4j.properties" />
+
+	<import resource="spring-redis.xml" />
+	
+	<bean id="springContextUtils" class="com.qiaoda.fdfs.fastLoadData.SpringContextUtils" />
+
+	<!--单线程 -->
+
+	<bean id="redisPoolBean" class="com.qiaoda.fdfs.fastLoadData.RedisPoolBean" />
+
+	<bean id="starUp" class="com.qiaoda.fdfs.threadpool.StartUp" />
+	
+	<bean name="genericObjectPoolConfig" class="org.apache.commons.pool2.impl.GenericObjectPoolConfig" >
+			<property name="maxWaitMillis" value="-1" />
+			<property name="maxTotal" value="1000" />
+			<property name="minIdle" value="8" />
+			<property name="maxIdle" value="100" />
+	</bean>
+
+	<bean id="jedisCluster" class="com.qiaoda.fdfs.threadpool.JedisClusterFactory">
+		<property name="addressConfig">
+			<value>classpath:con_redis.properties</value>
+		</property>
+		<property name="addressKeyPrefix" value="address" />   <!--  属性文件里  key的前缀 -->
+		
+		<property name="timeout" value="300000" />
+		<property name="maxRedirections" value="6" />
+		<property name="genericObjectPoolConfig" ref="genericObjectPoolConfig" />
+	</bean>
+
+	<!-- <import resource="classpath:conf/spring-templates.xml" /> -->
+	<!-- <import resource="classpath:restful-config.xml" /> <import resource="classpath:jetty-config.xml" 
+		/><bean id="redisQueueConsumer" class="com.qiaoda.fdfs.RedisQueueConsumer"/> 
+		<import resource="classpath:db-config.xml" /> <import resource="classpath:amqp-config.xml" 
+		/> <import resource="classpath:activiti-config.xml" /> <import resource="classpath:spring-aop.xml" 
+		/> -->
+
+	<!-- <import resource="classpath:spring-task.xml" /> -->
+	<!--<import resource="classpath:spring-time.xml"/> -->
+	<!-- 使用spring annotation自动扫描配置 -->
+	<!-- <context:component-scan base-package="com.qiaoda" /> -->
+	<!-- 自动注入	<bean id="mongoConnection" class="com.qiaoda.mongo.MongoConnection"
+		scope="singleton" /> -->
+	<context:annotation-config />
+<!--
+	 <bean id="dispatcherThreadPoolManager" class="com.qiaoda.thread.DispatcherThreadPoolManager" 
+		init-method="init"> <property name="minThreadNumber" value="${thread.dispatcher.number.min}"/> 
+		<property name="maxThreadNumber" value="${thread.dispatcher.number.max}"/> 
+		<property name="queueLen" value="${thread.dispatcher.queue.len}"/> </bean> 
+		<bean id="templateThreadPoolManager" class="com.qiaoda.thread.TemplateThreadPoolManager" 
+		init-method="init"> <property name="poolSizeMin" value="${thread.template.number.min}"/> 
+		<property name="poolSizeMax" value="${thread.template.number.max}"/> </bean> -->
+</beans>
